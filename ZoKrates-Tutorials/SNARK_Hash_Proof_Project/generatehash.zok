@@ -1,0 +1,11 @@
+import "hashes/sha256/512bitPacked" as sha256packed;  // is a SHA256 implementation that is optimized for the use in the ZoKrates DSL
+
+// a field value can only hold 254 bits due to the size of the underlying prime field we are using
+// As a consequence, we use four field elements, each one encoding 128 bits, to represent our input. The four elements are then concatenated in ZoKrates and passed to SHA256.
+
+def main(private field a, private field b, private field c, private field d) -> field[2] {
+    // Given that the resulting hash is 256 bit long, we split it in two and return each value as a 128 bit number.
+    field[2] h = sha256packed([a, b, c, d]);
+
+    return h;
+}
